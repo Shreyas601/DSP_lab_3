@@ -1,0 +1,36 @@
+recObj = audiorecorder(44100,16,1);
+recDuration = 3;
+fs0 = 44100;
+disp("Begin speaking.")
+recordblocking(recObj,recDuration);
+disp("End of recording.")
+y0 = getaudiodata(recObj);
+fft0 = fft(y0);
+magspec = abs(fft0);
+len = length(y0);
+frequency_wistle = (0:(len-1)) * (fs0/len);
+[~,peak0] = max(magspec);
+fundamental_freq_wistle_key = (peak0 - 1)*(fs0/len)
+
+recObj = audiorecorder(44100,16,1);
+recDuration = 3;
+fs0 = 44100;
+disp("Begin speaking.")
+recordblocking(recObj,recDuration);
+disp("End of recording.")
+y1 = getaudiodata(recObj);
+fft0 = fft(y1);
+magspec = abs(fft0);
+len = length(y1);
+frequency_wistle = (0:(len-1)) * (fs0/len);
+[~,peak1] = max(magspec);
+fundamental_freq_access = (peak1 - 1)*(fs0/len)
+fn2(fundamental_freq_wistle_key,fundamental_freq_access)
+
+function F = fn2(fundamental_freq_wistle_key ,fundamental_freq_access)
+if((abs(fundamental_freq_wistle_key - fundamental_freq_access))/fundamental_freq_wistle_key <= 0.05)
+    fprintf('access granted');
+else
+    fprintf('access denied');
+end
+end
